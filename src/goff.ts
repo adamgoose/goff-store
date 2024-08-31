@@ -14,10 +14,10 @@ export type FeatureFlag<T> = {
 export type Variation<T> = T;
 
 export type Rule = {
-  name: string;
-  query: string;
+  name?: string;
+  query?: string;
   variation: string;
-  percentage: Record<string, number>;
+  percentage?: Record<string, number>;
   progressiveRollout?: ProgressiveRollout;
   disable?: boolean;
 };
