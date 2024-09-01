@@ -4,9 +4,11 @@ import { db } from "@/db/client";
 import { features } from "@/db/schema";
 
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function deleteFeature(name: string) {
   await db().delete(features).where(eq(features.name, name));
+  revalidatePath("/features");
 }
 
 export async function setDefaultVariation(name: string, variation: string) {

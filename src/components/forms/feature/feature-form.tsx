@@ -30,17 +30,22 @@ export const FeatureFormContext = createContext<FeatureFormContext>(
 );
 
 export interface FeatureFormProps {
-  onSubmit: (feature: z.infer<typeof FeatureSchema>) => any;
+  onSubmit?: (feature: z.infer<typeof FeatureSchema>) => any;
+  updateFeature?: (
+    name: string,
+    feature: z.infer<typeof FeatureSchema>,
+  ) => Promise<any>;
+  initialValue?: z.infer<typeof FeatureSchema>;
 }
 
 export default function FeatureForm({ ...props }: FeatureFormProps) {
   const form = useForm<z.infer<typeof FeatureSchema>>({
     resolver: zodResolver(FeatureSchema),
-    defaultValues: {
-      feature: "feat",
+    defaultValues: props.initialValue || {
+      feature: "",
       type: "boolean",
       disabled: false,
-      tracked: true,
+      trackEvents: true,
       defaultRule: {
         variation: "disabled",
       },
@@ -54,12 +59,7 @@ export default function FeatureForm({ ...props }: FeatureFormProps) {
           value: true,
         },
       ],
-      metadata: [
-        {
-          name: "foo",
-          value: "bar",
-        },
-      ],
+      metadata: [],
     },
   });
 
@@ -78,12 +78,23 @@ export default function FeatureForm({ ...props }: FeatureFormProps) {
     name: "metadata",
   });
 
+  const onSubmit = (feature: z.infer<typeof FeatureSchema>) => {
+    if (props.onSubmit) {
+      props.onSubmit(feature);
+    }
+
+    if (props.updateFeature) {
+      props.updateFeature(feature.feature, feature);
+    }
+    //
+  };
+
   return (
     <FeatureFormContext.Provider
       value={{ form, variations, targeting, metadata }}
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit((v) => props.onSubmit(v))}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid flex-1 items-start gap-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
             <div className="col-span-1 flex flex-col flex-1 gap-4 md:gap-8">
               <Details />

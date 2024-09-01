@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,19 +8,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Home, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Home } from "lucide-react";
 import MobileNav from "./mobile-nav";
 import Link from "next/link";
-import { Button } from "./ui/button";
 import {
   OrganizationSwitcher,
   SignedIn,
@@ -27,8 +18,12 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import { useParams, usePathname } from "next/navigation";
 
 export default function TopNav() {
+  const path = usePathname();
+  const params = useParams();
+
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <MobileNav />
@@ -44,16 +39,36 @@ export default function TopNav() {
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          {/* <BreadcrumbSeparator /> */}
-          {/* <BreadcrumbItem> */}
-          {/*   <BreadcrumbLink asChild> */}
-          {/*     <Link href="#">Orders</Link> */}
-          {/*   </BreadcrumbLink> */}
-          {/* </BreadcrumbItem> */}
-          {/* <BreadcrumbSeparator /> */}
-          {/* <BreadcrumbItem> */}
-          {/*   <BreadcrumbPage>Recent Orders</BreadcrumbPage> */}
-          {/* </BreadcrumbItem> */}
+          {path.startsWith("/features") && (
+            <>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                {path == "/features" ? (
+                  <BreadcrumbPage>Features</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link href="/features">Features</Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+              {path.startsWith("/features/create") && (
+                <>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Create</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </>
+              )}
+              {params.feature && (
+                <>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>{params.feature}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </>
+              )}
+            </>
+          )}
         </BreadcrumbList>
       </Breadcrumb>
       {/* <div className="relative ml-auto flex-1 md:grow-0"> */}

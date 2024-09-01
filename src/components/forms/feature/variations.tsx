@@ -7,6 +7,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -42,6 +43,7 @@ export default function Variations() {
                       <FormControl>
                         <Input placeholder="default" {...field} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -71,6 +73,7 @@ export default function Variations() {
                           )}
                         </>
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />

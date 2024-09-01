@@ -7,6 +7,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import {
   Select,
@@ -47,6 +48,7 @@ export default function TargetingRules() {
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -59,12 +61,13 @@ export default function TargetingRules() {
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
-                  name="defaultRule.variation"
+                  name={`targeting.${index}.variation`}
                   render={({ field }) => (
                     <FormItem className="grow">
                       <FormLabel>Serve</FormLabel>
@@ -88,6 +91,7 @@ export default function TargetingRules() {
                             ))}
                         </SelectContent>
                       </Select>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />

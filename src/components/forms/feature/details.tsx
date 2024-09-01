@@ -12,6 +12,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -25,7 +26,6 @@ import { Switch } from "@/components/ui/switch";
 
 export default function Details() {
   const { form } = useContext(FeatureFormContext);
-  const { errors } = form.formState;
 
   return (
     <Card>
@@ -42,12 +42,9 @@ export default function Details() {
               <FormItem>
                 <FormLabel>Feature Name</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="my_next_feature"
-                    aria-invalid={errors.feature ? "true" : "false"}
-                    {...field}
-                  />
+                  <Input placeholder="my_next_feature" {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -94,7 +91,7 @@ export default function Details() {
             />
             <FormField
               control={form.control}
-              name="tracked"
+              name="trackEvents"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-center space-y-1.5">
                   <FormLabel>Tracked</FormLabel>
@@ -134,6 +131,7 @@ export default function Details() {
                       ))}
                   </SelectContent>
                 </Select>
+                <FormMessage />
               </FormItem>
             )}
           />

@@ -25,6 +25,7 @@ import { features } from "@/db/schema";
 import { Copy, Edit, Trash } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { deleteFeature, setDefaultVariation } from "@/app/features/actions";
+import Link from "next/link";
 
 export default function FeaturesTable({
   data,
@@ -82,8 +83,10 @@ export default function FeaturesTable({
               <Badge>{feature.spec.targeting.length}</Badge>
             </TableCell>
             <TableCell className="flex flex-row justify-end gap-3">
-              <Button size="icon">
-                <Edit />
+              <Button asChild size="icon">
+                <Link href={`/features/${feature.name}`}>
+                  <Edit />
+                </Link>
               </Button>
               <Button
                 size="icon"

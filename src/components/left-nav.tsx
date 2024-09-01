@@ -24,8 +24,8 @@ function NavItem(props: {
           href={props.href}
           className={cn(
             "flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8",
-            { "bg-accent text-accent-foreground": path == props.href },
-            { "text-muted-foreground": path != props.href },
+            { "bg-accent text-accent-foreground": path.startsWith(props.href) },
+            { "text-muted-foreground": !path.startsWith(props.href) },
           )}
         >
           {props.icon || <Home className="h-5 w-5" />}
