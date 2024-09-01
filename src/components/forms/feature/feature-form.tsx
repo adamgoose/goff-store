@@ -16,6 +16,7 @@ import Variations from "./variations";
 import Debug from "./debug";
 import TargetingRules from "./targeting-rules";
 import Metadata from "./metadata";
+import { Button } from "@/components/ui/button";
 
 export interface FeatureFormContext {
   form: UseFormReturn<z.infer<typeof FeatureSchema>>;
@@ -28,22 +29,35 @@ export const FeatureFormContext = createContext<FeatureFormContext>(
   {} as FeatureFormContext,
 );
 
-export interface FeatureFormProps { }
+export interface FeatureFormProps {
+  onSubmit: (feature: z.infer<typeof FeatureSchema>) => any;
+}
 
 export default function FeatureForm({ ...props }: FeatureFormProps) {
   const form = useForm<z.infer<typeof FeatureSchema>>({
     resolver: zodResolver(FeatureSchema),
     defaultValues: {
-      feature: "",
+      feature: "feat",
       type: "boolean",
       disabled: false,
       tracked: true,
       defaultRule: {
-        variation: "default",
+        variation: "disabled",
       },
       variations: [
         {
-          name: "default",
+          name: "disabled",
+          value: false,
+        },
+        {
+          name: "enabled",
+          value: true,
+        },
+      ],
+      metadata: [
+        {
+          name: "foo",
+          value: "bar",
         },
       ],
     },
@@ -69,17 +83,20 @@ export default function FeatureForm({ ...props }: FeatureFormProps) {
       value={{ form, variations, targeting, metadata }}
     >
       <Form {...form}>
-        <div className="grid flex-1 items-start gap-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-          <div className="col-span-1 flex flex-col flex-1 gap-4 md:gap-8">
-            <Details />
-            <Debug />
+        <form onSubmit={form.handleSubmit((v) => props.onSubmit(v))}>
+          <div className="grid flex-1 items-start gap-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
+            <div className="col-span-1 flex flex-col flex-1 gap-4 md:gap-8">
+              <Details />
+              <Button>Submit</Button>
+              <Debug />
+            </div>
+            <div className="col-span-2 flex flex-col flex-1 gap-4 md:gap-8">
+              <Variations />
+              <TargetingRules />
+              <Metadata />
+            </div>
           </div>
-          <div className="col-span-2 flex flex-col flex-1 gap-4 md:gap-8">
-            <Variations />
-            <TargetingRules />
-            <Metadata />
-          </div>
-        </div>
+        </form>
       </Form>
     </FeatureFormContext.Provider>
   );

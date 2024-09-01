@@ -78,6 +78,7 @@ export default function Variations() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
+                        type="button"
                         variant="destructive"
                         size="icon"
                         onClick={() => variations.remove(index)}
@@ -98,6 +99,7 @@ export default function Variations() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  type="button"
                   size="icon"
                   onClick={() =>
                     variations.append({

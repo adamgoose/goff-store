@@ -49,7 +49,6 @@ export default function Metadata() {
                   render={({ field }) => (
                     <FormItem className="grow">
                       <FormLabel>Value</FormLabel>
-                      <br />
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -60,6 +59,7 @@ export default function Metadata() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
+                        type="button"
                         variant="destructive"
                         size="icon"
                         onClick={() => metadata.remove(index)}
@@ -78,10 +78,12 @@ export default function Metadata() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  type="button"
                   size="icon"
                   onClick={() =>
                     metadata.append({
                       name: "",
+                      value: "",
                     })
                   }
                 >

@@ -25,6 +25,7 @@ import { Switch } from "@/components/ui/switch";
 
 export default function Details() {
   const { form } = useContext(FeatureFormContext);
+  const { errors } = form.formState;
 
   return (
     <Card>
@@ -41,7 +42,11 @@ export default function Details() {
               <FormItem>
                 <FormLabel>Feature Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="my_next_feature" {...field} />
+                  <Input
+                    placeholder="my_next_feature"
+                    aria-invalid={errors.feature ? "true" : "false"}
+                    {...field}
+                  />
                 </FormControl>
               </FormItem>
             )}

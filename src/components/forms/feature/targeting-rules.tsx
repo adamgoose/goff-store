@@ -95,6 +95,7 @@ export default function TargetingRules() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
+                        type="button"
                         variant="destructive"
                         size="icon"
                         onClick={() => targeting.remove(index)}
@@ -115,6 +116,7 @@ export default function TargetingRules() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  type="button"
                   size="icon"
                   onClick={() =>
                     targeting.append({
