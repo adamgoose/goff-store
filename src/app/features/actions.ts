@@ -5,13 +5,13 @@ import { features } from "@/db/schema";
 
 import { eq } from "drizzle-orm";
 
-export async function deleteFeature(id: string) {
-  await db.delete(features).where(eq(features.id, id));
+export async function deleteFeature(name: string) {
+  await db().delete(features).where(eq(features.name, name));
 }
 
-export async function setDefaultVariation(id: string, variation: string) {
-  const feature = await db.query.features.findFirst({
-    where: eq(features.id, id),
+export async function setDefaultVariation(name: string, variation: string) {
+  const feature = await db().query.features.findFirst({
+    where: eq(features.name, name),
   });
 
   if (!feature) {
@@ -26,8 +26,8 @@ export async function setDefaultVariation(id: string, variation: string) {
   }
 
   feature.spec.defaultRule.variation = variation;
-  await db
+  await db()
     .update(features)
     .set({ spec: feature.spec })
-    .where(eq(features.id, id));
+    .where(eq(features.name, name));
 }

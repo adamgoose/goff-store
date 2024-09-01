@@ -1,10 +1,21 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { features } from "./schema";
+import { auth } from "@clerk/nextjs/server";
 
-const client = createClient({
-  url: process.env.TURSO_DATABASE_URL!,
-  authToken: process.env.TURSO_AUTH_TOKEN,
-});
+export const db = () => {
+  const { orgId, userId } = auth();
+  if (!orgId && !userId) {
+    throw new Error("unauthenticated");
+  }
 
-export const db = drizzle(client, { schema: { features } });
+  const tenant = (orgId || userId).toLowerCase().replaceAll("_", "-");
+  console.log("TENANT", tenant);
+  const url = `libsql://${tenant}-artisangoose.turso.io`;
+  const client = createClient({
+    url,
+    authToken: process.env.TURSO_AUTH_TOKEN,
+  });
+
+  return drizzle(client, { schema: { features } });
+};

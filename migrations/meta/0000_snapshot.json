@@ -1,23 +1,16 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "10d109a1-70a8-4269-871b-ae6f5229f3d8",
+  "id": "8ed64608-7773-4948-8aec-ee87121c0add",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "features": {
       "name": "features",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
         "name": {
           "name": "name",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": false
         },
@@ -25,7 +18,7 @@
           "name": "spec",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },

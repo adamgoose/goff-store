@@ -120,6 +120,8 @@ export default function TargetingRules() {
                   size="icon"
                   onClick={() =>
                     targeting.append({
+                      name: "",
+                      query: "",
                       variation: "default",
                     })
                   }

@@ -44,7 +44,7 @@ export default function FeaturesTable({
       </TableHeader>
       <TableBody>
         {data.map((feature) => (
-          <TableRow key={feature.id}>
+          <TableRow key={feature.name}>
             <TableCell className="flex flex-row flex-1 justify-between items-center">
               <span>{feature.name}</span>
               <Tooltip>
@@ -60,7 +60,7 @@ export default function FeaturesTable({
               <Select
                 defaultValue={feature.spec.defaultRule.variation}
                 onValueChange={(variation) =>
-                  setDefaultVariation(feature.id, variation)
+                  setDefaultVariation(feature.name, variation)
                 }
               >
                 <SelectTrigger>
@@ -88,7 +88,7 @@ export default function FeaturesTable({
               <Button
                 size="icon"
                 variant="destructive"
-                onClick={() => deleteFeature(feature.id)}
+                onClick={() => deleteFeature(feature.name)}
               >
                 <Trash />
               </Button>

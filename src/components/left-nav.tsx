@@ -6,11 +6,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Home, Package2 } from "lucide-react";
+import { Flag, Home, Package2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-function NavItem(props: { href: string; label: string }) {
+function NavItem(props: {
+  href: string;
+  label: string;
+  icon?: React.ReactNode;
+}) {
   const path = usePathname();
 
   return (
@@ -24,7 +28,7 @@ function NavItem(props: { href: string; label: string }) {
             { "text-muted-foreground": path != props.href },
           )}
         >
-          <Home className="h-5 w-5" />
+          {props.icon || <Home className="h-5 w-5" />}
           <span className="sr-only">{props.label}</span>
         </Link>
       </TooltipTrigger>
@@ -45,6 +49,11 @@ export default function LeftNav() {
           <span className="sr-only">Acme Inc</span>
         </Link>
         <NavItem href="/" label="Home" />
+        <NavItem
+          href="/features"
+          label="Features"
+          icon={<Flag className="h-5 w-5" />}
+        />
       </nav>
       {/* <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4"> */}
       {/*   <Tooltip> */}

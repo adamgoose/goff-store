@@ -6,12 +6,14 @@ import { db } from "@/db/client";
 import { features } from "@/db/schema";
 
 export async function createFeature(feature: z.infer<typeof FeatureSchema>) {
-  const result = await db.insert(features).values([
-    {
-      name: feature.feature,
-      spec: feature,
-    },
-  ]);
+  const result = await db()
+    .insert(features)
+    .values([
+      {
+        name: feature.feature,
+        spec: feature,
+      },
+    ]);
 
   return result.toJSON();
 }
