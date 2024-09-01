@@ -11,7 +11,7 @@ export const db = () => {
 
   const tenant = (orgId || userId).toLowerCase().replaceAll("_", "-");
   console.log("TENANT", tenant);
-  const url = `libsql://${tenant}-artisangoose.turso.io`;
+  const url = `libsql://${tenant}-${process.env.TURSO_ORG_NAME}.turso.io`;
   const client = createClient({
     url,
     authToken: process.env.TURSO_AUTH_TOKEN,

@@ -1,7 +1,6 @@
 import FeaturesTable from "@/components/tables/features";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -50,7 +49,7 @@ export default async function Features() {
           <pre>
             {`retriever:
   kind: http
-  url: https://goff-store.onvercel.io/api/features
+  url: https://goff-store.vercel.app/api/features
   headers:
     Authorization: Bearer {TOKEN}
             `}
