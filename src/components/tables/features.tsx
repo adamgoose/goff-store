@@ -26,6 +26,7 @@ import { Copy, Edit, Trash } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { deleteFeature, setDefaultVariation } from "@/app/features/actions";
 import Link from "next/link";
+import { Protect } from "@clerk/nextjs";
 
 export default function FeaturesTable({
   data,
@@ -86,18 +87,20 @@ export default function FeaturesTable({
               )}
             </TableCell>
             <TableCell className="flex flex-row justify-end gap-3">
-              <Button asChild size="icon">
-                <Link href={`/features/${feature.name}`}>
-                  <Edit />
-                </Link>
-              </Button>
-              <Button
-                size="icon"
-                variant="destructive"
-                onClick={() => deleteFeature(feature.name)}
-              >
-                <Trash />
-              </Button>
+              <Protect permission="org:features:write">
+                <Button asChild size="icon">
+                  <Link href={`/features/${feature.name}`}>
+                    <Edit />
+                  </Link>
+                </Button>
+                <Button
+                  size="icon"
+                  variant="destructive"
+                  onClick={() => deleteFeature(feature.name)}
+                >
+                  <Trash />
+                </Button>
+              </Protect>
             </TableCell>
           </TableRow>
         ))}

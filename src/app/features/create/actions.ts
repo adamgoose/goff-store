@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createFeature(feature: z.infer<typeof FeatureSchema>) {
-  const result = await db()
+  await db()
     .insert(features)
     .values([
       {

@@ -21,6 +21,7 @@ import Link from "next/link";
 import { importFeatures } from "./actions";
 import { asc } from "drizzle-orm";
 import RetrieverTokenDialog from "@/components/modals/retriever-token";
+import Protect from "@/components/protect-server";
 
 export const dynamic = "force-dynamic";
 
@@ -35,21 +36,23 @@ export default async function Features() {
             <CardTitle>Features ({data.length})</CardTitle>
           </CardHeader>
           <div className="m-6 flex flex-row gap-4">
-            <ImportFeatures importFeatures={importFeatures}>
-              <Button size="icon">
-                <Import />
-              </Button>
-            </ImportFeatures>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button asChild size="icon">
-                  <Link href="/features/create">
-                    <Plus />
-                  </Link>
+            <Protect permission="org:features:write">
+              <ImportFeatures importFeatures={importFeatures}>
+                <Button size="icon">
+                  <Import />
                 </Button>
-              </TooltipTrigger>
-              <TooltipContent side="left">Add Feature</TooltipContent>
-            </Tooltip>
+              </ImportFeatures>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button asChild size="icon">
+                    <Link href="/features/create">
+                      <Plus />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">Add Feature</TooltipContent>
+              </Tooltip>
+            </Protect>
           </div>
         </div>
         <CardContent>

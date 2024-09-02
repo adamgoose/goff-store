@@ -9,9 +9,13 @@ const turso = createClient({
   token: process.env.TURSO_API_TOKEN!,
 });
 
+export async function mkTenant(userId: string | null, orgId?: string | null) {
+  return (orgId || userId || "").toLowerCase().replaceAll("_", "-");
+}
+
 export async function currentTenant() {
   const { userId, orgId } = auth();
-  return (orgId || userId || "").toLowerCase().replaceAll("_", "-");
+  return await mkTenant(userId, orgId);
 }
 
 export async function tenantExists(tenant: string) {

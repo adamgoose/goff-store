@@ -38,7 +38,14 @@ export default function ConfirmPopover({
         >
           {cancelText}
         </Button>
-        <Button onClick={() => rest.handleConfirm()}>{confirmText}</Button>
+        <Button
+          onClick={async () => {
+            await rest.handleConfirm();
+            setOpen(false);
+          }}
+        >
+          {confirmText}
+        </Button>
       </PopoverContent>
     </Popover>
   );

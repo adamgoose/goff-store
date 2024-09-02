@@ -1,23 +1,18 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { tenantExists } from "./services/tenants";
-import { NextResponse } from "next/server";
-
-const isProtectedRoute = createRouteMatcher(["/features(.*)"]);
-const isSetupRoute = createRouteMatcher(["/setup(.*)"]);
+import { clerkMiddleware } from "@clerk/nextjs/server";
+import { stackMiddlewares } from "./middleware/stack";
+import {
+  withPermissionGuardedRoutes,
+  withProtectedRoutes,
+  withSetupRoutes,
+} from "./middleware/clerk";
 
 export default clerkMiddleware(
-  async (auth, req) => {
-    if (isProtectedRoute(req)) auth().protect();
-    const { userId, orgId } = auth();
-    const tenant = (orgId || userId || "").toLowerCase().replaceAll("_", "-");
-    const exists = await tenantExists(tenant);
-
-    if (!isSetupRoute(req) && !exists) {
-      return NextResponse.redirect(new URL("/setup", req.url));
-    }
-    if (isSetupRoute(req) && exists) {
-      return NextResponse.redirect(new URL("/features", req.url));
-    }
+  (auth, req, event) => {
+    return stackMiddlewares(auth, [
+      withProtectedRoutes,
+      withSetupRoutes,
+      withPermissionGuardedRoutes,
+    ])(req, event);
   },
   {
     debug: false,
