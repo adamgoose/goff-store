@@ -13,5 +13,5 @@ export async function setupTenant() {
   const tenant = (orgId || userId).toLowerCase().replaceAll("_", "-");
   await createTenant(tenant);
 
-  return redirect("/features");
+  return redirect("/features/create");
 }
