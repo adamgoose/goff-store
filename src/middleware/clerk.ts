@@ -40,7 +40,7 @@ const permissionGuards = [
   },
   {
     matcher: createRouteMatcher(["/features/create(.*)"]),
-    permission: "org:features:write",
+    permission: "org:feature:write",
   },
 ];
 

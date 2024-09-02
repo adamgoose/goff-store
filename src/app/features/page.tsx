@@ -36,7 +36,7 @@ export default async function Features() {
             <CardTitle>Features ({data.length})</CardTitle>
           </CardHeader>
           <div className="m-6 flex flex-row gap-4">
-            <Protect permission="org:features:write">
+            <Protect permission="org:feature:write">
               <ImportFeatures importFeatures={importFeatures}>
                 <Button size="icon">
                   <Import />

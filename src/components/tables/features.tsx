@@ -87,7 +87,7 @@ export default function FeaturesTable({
               )}
             </TableCell>
             <TableCell className="flex flex-row justify-end gap-3">
-              <Protect permission="org:features:write">
+              <Protect permission="org:feature:write">
                 <Button asChild size="icon">
                   <Link href={`/features/${feature.name}`}>
                     <Edit />
