@@ -44,7 +44,7 @@ export default function FeatureForm({ ...props }: FeatureFormProps) {
     defaultValues: props.initialValue || {
       feature: "",
       type: "boolean",
-      disabled: false,
+      disable: false,
       trackEvents: true,
       defaultRule: {
         variation: "disabled",

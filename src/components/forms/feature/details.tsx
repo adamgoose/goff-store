@@ -76,7 +76,7 @@ export default function Details() {
           <div className="grid grid-flow-col">
             <FormField
               control={form.control}
-              name="disabled"
+              name="disable"
               render={({ field }) => (
                 <FormItem className="flex flex-col items-center space-y-1.5">
                   <FormLabel>Disabled</FormLabel>

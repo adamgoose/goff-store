@@ -1,3 +1,4 @@
+import ImportFeatures from "@/components/modals/import-features";
 import FeaturesTable from "@/components/tables/features";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +11,9 @@ import {
 import { db } from "@/db/client";
 import { features } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
-import { Plus } from "lucide-react";
+import { Import, Plus } from "lucide-react";
 import Link from "next/link";
+import { importFeatures } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -26,16 +28,23 @@ export default async function Features() {
           <CardHeader>
             <CardTitle>Features ({data.length})</CardTitle>
           </CardHeader>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button asChild size="icon" className="m-6">
-                <Link href="/features/create">
-                  <Plus />
-                </Link>
+          <div className="m-6 flex flex-row gap-4">
+            <ImportFeatures importFeatures={importFeatures}>
+              <Button size="icon">
+                <Import />
               </Button>
-            </TooltipTrigger>
-            <TooltipContent side="left">Add Feature</TooltipContent>
-          </Tooltip>
+            </ImportFeatures>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button asChild size="icon">
+                  <Link href="/features/create">
+                    <Plus />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="left">Add Feature</TooltipContent>
+            </Tooltip>
+          </div>
         </div>
         <CardContent>
           <FeaturesTable data={data} />

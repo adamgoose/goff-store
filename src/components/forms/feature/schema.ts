@@ -23,19 +23,22 @@ export const FeatureSchema = z
       message: "Feature must be at least three characters",
     }),
     type: z.enum(["boolean", "number", "string", "json"]),
-    disabled: z.boolean(),
-    trackEvents: z.boolean().default(true),
+    disable: z.boolean().optional(),
+    trackEvents: z.boolean().default(true).optional(),
     defaultRule: RuleSchema,
-    targeting: z.array(
-      RuleSchema.extend({
-        name: z.string().min(1, {
-          message: "This field is required",
-        }),
-        query: z.string().min(1, {
-          message: "This field is required",
-        }),
-      }),
-    ),
+    targeting: z
+      .array(
+        RuleSchema,
+        // RuleSchema.extend({
+        //   name: z.string().min(1, {
+        //     message: "This field is required",
+        //   }),
+        //   query: z.string().min(1, {
+        //     message: "This field is required",
+        //   }),
+        // }),
+      )
+      .optional(),
     variations: Pairs,
     metadata: z.array(
       z.object({
@@ -58,7 +61,8 @@ export const FeatureSchema = z
   )
   .superRefine((feature, ctx) => {
     feature.variations.forEach((variation, i) => {
-      if (typeof variation.value != feature.type) {
+      let type = feature.type == "json" ? "object" : feature.type;
+      if (typeof variation.value != type) {
         ctx.addIssue({
           code: z.ZodIssueCode.unrecognized_keys,
           path: [`variations.${i}.value`],
@@ -68,7 +72,7 @@ export const FeatureSchema = z
       }
     });
 
-    feature.targeting.forEach((rule, i) => {
+    feature.targeting?.forEach((rule, i) => {
       if (!feature.variations.some((v) => v.name == rule.variation)) {
         ctx.addIssue({
           code: z.ZodIssueCode.unrecognized_keys,
@@ -79,22 +83,3 @@ export const FeatureSchema = z
       }
     });
   });
-// .refine(
-//   (feature) =>
-//     feature.variations.every((v) => {
-//       switch (feature.type) {
-//         case "string":
-//           return typeof v == "string";
-//         case "number":
-//           return typeof v == "number";
-//         case "boolean":
-//           return typeof v == "boolean";
-//         case "json":
-//           return true;
-//       }
-//     }),
-//   {
-//     path: ["variations.0.value"],
-//     message: "Values must match selected type",
-//   },
-// );

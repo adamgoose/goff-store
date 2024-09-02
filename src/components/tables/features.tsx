@@ -70,7 +70,8 @@ export default function FeaturesTable({
                 <SelectContent>
                   {feature.spec.variations.map((variation, index) => (
                     <SelectItem key={index} value={variation.name}>
-                      {variation.name} ({JSON.stringify(variation.value)})
+                      {variation.name} (
+                      {JSON.stringify(variation.value).substring(0, 32)})
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -80,7 +81,9 @@ export default function FeaturesTable({
               <Badge>{feature.spec.variations.length}</Badge>
             </TableCell>
             <TableCell className="text-center">
-              <Badge>{feature.spec.targeting.length}</Badge>
+              {feature.spec.targeting && (
+                <Badge>{feature.spec.targeting?.length}</Badge>
+              )}
             </TableCell>
             <TableCell className="flex flex-row justify-end gap-3">
               <Button asChild size="icon">
