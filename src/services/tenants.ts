@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@clerk/nextjs/server";
 import { createClient } from "@tursodatabase/api";
 import { kv } from "@vercel/kv";
 
@@ -8,7 +9,8 @@ const turso = createClient({
   token: process.env.TURSO_API_TOKEN!,
 });
 
-function tenant(userId?: string, orgId?: string) {
+export async function currentTenant() {
+  const { userId, orgId } = auth();
   return (orgId || userId || "").toLowerCase().replaceAll("_", "-");
 }
 
@@ -30,4 +32,8 @@ export async function createTenant(tenant: string) {
 export async function destroyTenant(tenant: string) {
   await turso.databases.delete(tenant);
   await kv.del("tenant:" + tenant);
+}
+
+export async function setNbf(tenant: string) {
+  await kv.set("nbf:" + tenant, Date.now());
 }

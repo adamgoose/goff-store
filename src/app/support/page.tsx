@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import ConfirmPopover from "@/components/ui/confirm-popover";
 import { OctagonX } from "lucide-react";
-import { destroyAccount } from "./actions";
+import { destroyAccount, revokeRetrieverTokens } from "./actions";
 
 export default function SupportPage() {
   return (
@@ -30,6 +30,25 @@ export default function SupportPage() {
         <CardFooter>
           <ConfirmPopover handleConfirm={destroyAccount}>
             <Button variant="destructive">Destroy Account</Button>
+          </ConfirmPopover>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Revoke All Retriever Tokens</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Alert variant="destructive">
+            <OctagonX />
+            <AlertTitle>Destructive Action</AlertTitle>
+            <AlertDescription>
+              This will revoke all Retriever Tokens!
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+        <CardFooter>
+          <ConfirmPopover handleConfirm={revokeRetrieverTokens}>
+            <Button variant="destructive">Revoke All</Button>
           </ConfirmPopover>
         </CardFooter>
       </Card>

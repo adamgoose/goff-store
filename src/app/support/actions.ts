@@ -1,6 +1,6 @@
 "use server";
 
-import { destroyTenant } from "@/services/tenants";
+import { currentTenant, destroyTenant, setNbf } from "@/services/tenants";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
@@ -14,4 +14,9 @@ export async function destroyAccount() {
   await destroyTenant(tenant);
 
   return redirect("/setup");
+}
+
+export async function revokeRetrieverTokens() {
+  const tenant = await currentTenant();
+  await setNbf(tenant);
 }

@@ -1,8 +1,19 @@
 import { db } from "@/db/client";
+import { currentTenant } from "@/services/tenants";
 import { auth } from "@clerk/nextjs/server";
+import { kv } from "@vercel/kv";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   auth().protect();
+
+  const { sessionClaims } = auth();
+  const tenant = await currentTenant();
+
+  const nbf = await kv.get<number>("nbf:" + tenant);
+  if (nbf && (sessionClaims?.iat || 0) * 1000 < nbf) {
+    return new NextResponse("Token Revoked", { status: 401 });
+  }
 
   const features = await db().query.features.findMany();
 
