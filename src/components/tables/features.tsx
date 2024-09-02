@@ -26,7 +26,7 @@ import { Copy, Edit, Trash } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { deleteFeature, setDefaultVariation } from "@/app/features/actions";
 import Link from "next/link";
-import { Protect } from "@clerk/nextjs";
+import Protect from "@/components/protect-client";
 
 export default function FeaturesTable({
   data,

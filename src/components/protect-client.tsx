@@ -1,4 +1,6 @@
-import { useAuth } from "@clerk/nextjs";
+"use client";
+
+import { useAuth, Protect } from "@clerk/nextjs";
 
 export type ProtectProps = React.PropsWithChildren<
   (
@@ -15,7 +17,7 @@ export type ProtectProps = React.PropsWithChildren<
   }
 >;
 
-export default function Protect(props: ProtectProps) {
+export default function ProtectClient(props: ProtectProps) {
   const { orgId } = useAuth();
 
   if (!orgId) return props.children;

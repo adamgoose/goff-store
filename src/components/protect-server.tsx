@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
+import { Protect } from "@clerk/nextjs";
 
 export type ProtectProps = React.PropsWithChildren<
   (
@@ -15,7 +16,7 @@ export type ProtectProps = React.PropsWithChildren<
   }
 >;
 
-export default function Protect(props: ProtectProps) {
+export default function ProtectServer(props: ProtectProps) {
   const { orgId } = auth();
 
   if (!orgId) return props.children;
