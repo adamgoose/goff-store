@@ -16,7 +16,6 @@ import {
 
 import { db } from "@/db/client";
 import { features } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
 import { Import, Plus } from "lucide-react";
 import Link from "next/link";
 import { importFeatures } from "./actions";
@@ -26,7 +25,6 @@ import RetrieverTokenDialog from "@/components/modals/retriever-token";
 export const dynamic = "force-dynamic";
 
 export default async function Features() {
-  auth().protect();
   const data = await db().select().from(features).orderBy(asc(features.name));
 
   return (

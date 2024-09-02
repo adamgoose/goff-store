@@ -1,6 +1,28 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { tenantExists } from "./services/tenants";
+import { NextResponse } from "next/server";
 
-export default clerkMiddleware();
+const isProtectedRoute = createRouteMatcher(["/features(.*)"]);
+const isSetupRoute = createRouteMatcher(["/setup(.*)"]);
+
+export default clerkMiddleware(
+  async (auth, req) => {
+    if (isProtectedRoute(req)) auth().protect();
+    const { userId, orgId } = auth();
+    const tenant = (orgId || userId || "").toLowerCase().replaceAll("_", "-");
+    const exists = await tenantExists(tenant);
+
+    if (!isSetupRoute(req) && !exists) {
+      return NextResponse.redirect(new URL("/setup", req.url));
+    }
+    if (isSetupRoute(req) && exists) {
+      return NextResponse.redirect(new URL("/features", req.url));
+    }
+  },
+  {
+    debug: false,
+  },
+);
 
 export const config = {
   matcher: [

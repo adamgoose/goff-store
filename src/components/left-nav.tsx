@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Flag, Home, Package2 } from "lucide-react";
+import { Flag, HelpCircle, Home, Package2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -53,6 +53,11 @@ export default function LeftNav() {
           href="/features"
           label="Features"
           icon={<Flag className="h-5 w-5" />}
+        />
+        <NavItem
+          href="/support"
+          label="Support"
+          icon={<HelpCircle className="h-5 w-5" />}
         />
       </nav>
       {/* <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4"> */}
