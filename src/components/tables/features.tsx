@@ -27,6 +27,7 @@ import { Badge } from "@/components/ui/badge";
 import { deleteFeature, setDefaultVariation } from "@/app/features/actions";
 import Link from "next/link";
 import Protect from "@/components/protect-client";
+import ConfirmPopover from "../ui/confirm-popover";
 
 export default function FeaturesTable({
   data,
@@ -93,13 +94,13 @@ export default function FeaturesTable({
                     <Edit />
                   </Link>
                 </Button>
-                <Button
-                  size="icon"
-                  variant="destructive"
-                  onClick={() => deleteFeature(feature.name)}
+                <ConfirmPopover
+                  handleConfirm={() => deleteFeature(feature.name)}
                 >
-                  <Trash />
-                </Button>
+                  <Button size="icon" variant="destructive">
+                    <Trash />
+                  </Button>
+                </ConfirmPopover>
               </Protect>
             </TableCell>
           </TableRow>

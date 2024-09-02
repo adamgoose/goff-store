@@ -11,3 +11,7 @@ export const features = sqliteTable("features", {
     .$type<z.infer<typeof FeatureSchema>>()
     .notNull(),
 });
+
+export const environments = sqliteTable("environments", {
+  name: text("name").notNull().primaryKey(),
+});

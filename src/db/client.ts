@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
-import { features } from "./schema";
+import { environments, features } from "./schema";
 import { auth } from "@clerk/nextjs/server";
 
 export const db = () => {
@@ -17,5 +17,5 @@ export const db = () => {
     authToken: process.env.TURSO_AUTH_TOKEN,
   });
 
-  return drizzle(client, { schema: { features } });
+  return drizzle(client, { schema: { features, environments } });
 };

@@ -35,6 +35,10 @@ export const withSetupRoutes: MiddlewareFactory = (next, auth) => {
 
 const permissionGuards = [
   {
+    matcher: createRouteMatcher(["/environments(.*)"]),
+    permission: "org:environment:read",
+  },
+  {
     matcher: createRouteMatcher(["/support(.*)"]),
     permission: "org:account:support",
   },

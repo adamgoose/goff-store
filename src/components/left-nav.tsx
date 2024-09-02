@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@clerk/nextjs";
-import { Flag, HelpCircle, Home, Package2 } from "lucide-react";
+import { Container, Flag, HelpCircle, Home, Package2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Protect from "./protect-client";
@@ -52,6 +52,13 @@ export default function LeftNav() {
           <span className="sr-only">Acme Inc</span>
         </Link>
         <NavItem href="/" label="Home" />
+        <Protect permission="org:environment:read">
+          <NavItem
+            href="/environments"
+            label="Environments"
+            icon={<Container className="h-5 w-5" />}
+          />
+        </Protect>
         <NavItem
           href="/features"
           label="Features"
