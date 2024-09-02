@@ -31,6 +31,7 @@ export async function createTenant(tenant: string) {
   });
 
   await kv.set("tenant:" + tenant, db);
+  await setNbf(tenant);
 }
 
 export async function destroyTenant(tenant: string) {
